@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Usuario;
 import com.ranyell.chat.repositories.UsuarioRepository;
+import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -16,6 +17,7 @@ public class UsuarioService {
 
 	public Usuario findById(Integer id) {
 		Optional<Usuario> obj = usuarioRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Usuario não encontrada Id: " + id + ",tipo: " + Usuario.class.getName()));
 	}
 }

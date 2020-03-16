@@ -11,7 +11,7 @@ import com.ranyell.chat.domain.Mensagem;
 import com.ranyell.chat.services.MensagemService;
 
 @RestController
-@RequestMapping("/mensagem")
+@RequestMapping("/mensagens")
 public class MensagemResource {
 	
 	@Autowired

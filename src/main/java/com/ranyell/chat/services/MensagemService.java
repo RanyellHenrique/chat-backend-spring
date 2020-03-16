@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Mensagem;
 import com.ranyell.chat.repositories.MensagemRepository;
+import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class MensagemService {
@@ -16,6 +17,7 @@ public class MensagemService {
 
 	public Mensagem findById(Integer id) {
 		Optional<Mensagem> obj = mensagemRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Mensagem não encontrada Id: " + id + ",tipo: " + Mensagem.class.getName()));
 	}
 }
