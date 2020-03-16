@@ -8,35 +8,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Usuario implements Serializable {
+public class Conversa  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String email;
-	private String nome;
-	private String senha;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "usuarios")
-	private List<Conversa> conversas = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "conversa_usuario",
+		joinColumns = @JoinColumn(name = "conversa_id"),
+		inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private List<Usuario> usuarios = new ArrayList<>();
 	
-	public Usuario() {
+	@OneToMany(mappedBy = "conversa")
+	private List<Mensagem> mensagens = new ArrayList<>();
+
+	public Conversa() {
 		
 	}
 
-	public Usuario(Integer id, String email, String nome, String senha) {
+	public Conversa(Integer id) {
 		super();
 		this.id = id;
-		this.email = email;
-		this.nome = nome;
-		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -46,33 +49,13 @@ public class Usuario implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
+	
+	public List<Usuario> getUsuarios(){
+		return usuarios;
 	}
 	
-	public List<Conversa> getConversas(){
-		return conversas;
+	public List<Mensagem> getMensagens() {
+		return mensagens;
 	}
 
 	@Override
@@ -91,7 +74,7 @@ public class Usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Conversa other = (Conversa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -99,5 +82,4 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
-
 }
