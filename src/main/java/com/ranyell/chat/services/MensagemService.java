@@ -3,10 +3,12 @@ package com.ranyell.chat.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Mensagem;
 import com.ranyell.chat.repositories.MensagemRepository;
+import com.ranyell.chat.services.exceptions.DataIntegrityException;
 import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -22,6 +24,21 @@ public class MensagemService {
 	}
 	
 	public Mensagem insert(Mensagem obj) {
+		return mensagemRepository.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		findById(id);
+		try {
+			mensagemRepository.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Mensagem não pode ser excluido.");
+		}
+	}
+	
+	public Mensagem update(Mensagem obj) {
+		findById(obj.getId());
 		return mensagemRepository.save(obj);
 	}
 }

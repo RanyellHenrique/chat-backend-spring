@@ -36,4 +36,9 @@ public class ConversaService {
 			throw new DataIntegrityException("Não é possivel excluir essa conversa");
 		}
 	}
+	
+	public Conversa update(Conversa obj) {
+		findById(obj.getId());
+		return conversaRepository.save(obj);
+	}
 }

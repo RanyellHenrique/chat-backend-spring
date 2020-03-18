@@ -36,4 +36,9 @@ public class UsuarioService {
 			throw new DataIntegrityException("Usuario não pode ser excluido.");
 		}
 	}
+	
+	public Usuario update(Usuario obj) {
+		findById(obj.getId());
+		return usuarioRepository.save(obj);
+	}
 }
