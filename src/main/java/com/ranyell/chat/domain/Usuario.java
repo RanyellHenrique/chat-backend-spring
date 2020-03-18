@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +21,6 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String senha;
 	
-	@JsonIgnore
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Conversa> conversas = new ArrayList<>();
 	

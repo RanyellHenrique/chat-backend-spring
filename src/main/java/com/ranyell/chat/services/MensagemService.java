@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Mensagem;
@@ -40,5 +43,10 @@ public class MensagemService {
 	public Mensagem update(Mensagem obj) {
 		findById(obj.getId());
 		return mensagemRepository.save(obj);
+	}
+	
+	public Page<Mensagem> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pagRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return mensagemRepository.findAll(pagRequest);
 	}
 }

@@ -36,6 +36,12 @@ public class TestConfig implements CommandLineRunner {
 		Usuario s1 = new Usuario(null, "ranyellheneique@gmail.com", "Ranyell Henrique dos Santos", "123");
 		Usuario s2 = new Usuario(null, "Edmilson@gmail.com", "Edmilson pé de fava", "123");
 		Usuario s3 = new Usuario(null, "Will@gmail.com", "Will Smith", "123");
+		Usuario s4 = new Usuario(null, "rafael@gmail.com", "rafael", "123");
+		Usuario s5 = new Usuario(null, "eduardo@gmail.com", "Eduardo", "123");
+		Usuario s6 = new Usuario(null, "willian@gmail.com", "Willian", "123");
+		Usuario s7 = new Usuario(null, "daniel@gmail.com", "Ranyell Henrique dos Santos", "123");
+		Usuario s8 = new Usuario(null, "fabio@gmail.com", "fabio pé de fava", "123");
+		Usuario s9 = new Usuario(null, "ana@gmail.com", "ana", "123");
 		
 		Conversa c1 = new Conversa(null);
 		Conversa c2 = new Conversa(null);
@@ -55,7 +61,7 @@ public class TestConfig implements CommandLineRunner {
 		c1.getMensagens().addAll(Arrays.asList(m1, m2));
 		c1.getMensagens().addAll(Arrays.asList(m3, m4));
 		
-		usuarioRepository.saveAll(Arrays.asList(s1, s2, s3));
+		usuarioRepository.saveAll(Arrays.asList(s1, s2, s3, s4, s5, s6, s7, s8, s9));
 		conversaRepository.saveAll(Arrays.asList(c1, c2));
 		mensagemRepository.saveAll(Arrays.asList(m1, m2, m3, m4));
 	}

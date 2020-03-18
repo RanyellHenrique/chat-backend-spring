@@ -27,6 +27,7 @@ public class Mensagem implements Serializable {
 	@JoinColumn(name = "conversa_id")
 	private Conversa conversa;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
