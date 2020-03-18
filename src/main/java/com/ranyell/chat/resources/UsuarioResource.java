@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Usuario obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody Usuario obj){
 		obj = usuarioService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -50,7 +52,7 @@ public class UsuarioResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Usuario obj){
+	public ResponseEntity<Void> update(@Valid @PathVariable Integer id, @RequestBody Usuario obj){
 		obj.setId(id);
 		obj = usuarioService.update(obj);
 		return ResponseEntity.noContent().build();

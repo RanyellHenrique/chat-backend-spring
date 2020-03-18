@@ -33,15 +33,15 @@ public class TestConfig implements CommandLineRunner {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Usuario s1 = new Usuario(null, "ranyellheneique@gmail.com", "Ranyell Henrique dos Santos", "123");
-		Usuario s2 = new Usuario(null, "Edmilson@gmail.com", "Edmilson pé de fava", "123");
-		Usuario s3 = new Usuario(null, "Will@gmail.com", "Will Smith", "123");
-		Usuario s4 = new Usuario(null, "rafael@gmail.com", "rafael", "123");
-		Usuario s5 = new Usuario(null, "eduardo@gmail.com", "Eduardo", "123");
-		Usuario s6 = new Usuario(null, "willian@gmail.com", "Willian", "123");
-		Usuario s7 = new Usuario(null, "daniel@gmail.com", "Ranyell Henrique dos Santos", "123");
-		Usuario s8 = new Usuario(null, "fabio@gmail.com", "fabio pé de fava", "123");
-		Usuario s9 = new Usuario(null, "ana@gmail.com", "ana", "123");
+		Usuario s1 = new Usuario(null, "ranyellheneique@gmail.com", "Ranyell Henrique dos Santos", "12345");
+		Usuario s2 = new Usuario(null, "Edmilson@gmail.com", "Edmilson pé de fava", "12345");
+		Usuario s3 = new Usuario(null, "Will@gmail.com", "Will Smith", "12345");
+		Usuario s4 = new Usuario(null, "rafael@gmail.com", "rafael", "12345");
+		Usuario s5 = new Usuario(null, "eduardo@gmail.com", "Eduardo", "12345");
+		Usuario s6 = new Usuario(null, "willian@gmail.com", "Willian", "12345");
+		Usuario s7 = new Usuario(null, "daniel@gmail.com", "Ranyell Henrique dos Santos", "12345");
+		Usuario s8 = new Usuario(null, "fabio@gmail.com", "Dabio pé de fava", "12345");
+		Usuario s9 = new Usuario(null, "ana@gmail.com", "Ana Julia", "12345");
 		
 		Conversa c1 = new Conversa(null);
 		Conversa c2 = new Conversa(null);
