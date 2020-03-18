@@ -20,4 +20,8 @@ public class MensagemService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Mensagem não encontrada Id: " + id + ",tipo: " + Mensagem.class.getName()));
 	}
+	
+	public Mensagem insert(Mensagem obj) {
+		return mensagemRepository.save(obj);
+	}
 }
