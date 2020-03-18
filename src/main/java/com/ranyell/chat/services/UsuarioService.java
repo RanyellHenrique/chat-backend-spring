@@ -1,5 +1,6 @@
 package com.ranyell.chat.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class UsuarioService {
 	public Usuario update(Usuario obj) {
 		findById(obj.getId());
 		return usuarioRepository.save(obj);
+	}
+	
+	public List<Usuario> findAll(){
+		List<Usuario> obj = usuarioRepository.findAll();
+		return obj;
 	}
 }

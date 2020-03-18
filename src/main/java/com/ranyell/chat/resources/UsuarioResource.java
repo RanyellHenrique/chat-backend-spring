@@ -1,6 +1,8 @@
 package com.ranyell.chat.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ranyell.chat.domain.Usuario;
+import com.ranyell.chat.dto.UsuarioDTO;
 import com.ranyell.chat.services.UsuarioService;
 
 @RestController
@@ -49,6 +52,13 @@ public class UsuarioResource {
 		obj.setId(id);
 		obj = usuarioService.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<UsuarioDTO>> findAll(){
+		List<Usuario> list = usuarioService.findAll();
+		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 
 }
