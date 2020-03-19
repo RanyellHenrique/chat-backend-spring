@@ -13,8 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Conversa  implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,6 @@ public class Conversa  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "conversa_usuario",
 		joinColumns = @JoinColumn(name = "conversa_id"),

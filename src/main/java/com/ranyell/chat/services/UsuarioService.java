@@ -42,10 +42,11 @@ public class UsuarioService {
 	}
 	
 	public Usuario update(Usuario obj) {
-		findById(obj.getId());
-		return usuarioRepository.save(obj);
+		Usuario newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return usuarioRepository.save(newObj);
 	}
-	
+
 	public List<Usuario> findAll(){
 		List<Usuario> obj = usuarioRepository.findAll();
 		return obj;
@@ -54,5 +55,10 @@ public class UsuarioService {
 	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pagRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return usuarioRepository.findAll(pagRequest);
+	}
+	
+	private void updateData(Usuario newObj, Usuario obj) {
+		newObj.setEmail(obj.getEmail());
+		newObj.setNome(obj.getNome());
 	}
 }

@@ -2,6 +2,8 @@ package com.ranyell.chat.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class MensagemResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Mensagem obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody Mensagem obj){
 		obj = mensagemService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -47,7 +49,7 @@ public class MensagemResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Mensagem obj){
+	public ResponseEntity<Void> update(@Valid @PathVariable Integer id, @RequestBody Mensagem obj){
 		obj.setId(id);
 		obj = mensagemService.update(obj);
 		return ResponseEntity.noContent().build();

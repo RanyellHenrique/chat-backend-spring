@@ -1,6 +1,9 @@
 package com.ranyell.chat.services;
 
+import java.util.Date;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,6 +22,12 @@ public class MensagemService {
 	
 	@Autowired
 	private MensagemRepository mensagemRepository;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private ConversaService conversaService;
 
 	public Mensagem findById(Integer id) {
 		Optional<Mensagem> obj = mensagemRepository.findById(id);
@@ -26,7 +35,11 @@ public class MensagemService {
 				"Mensagem não encontrada Id: " + id + ",tipo: " + Mensagem.class.getName()));
 	}
 	
+	@Transactional
 	public Mensagem insert(Mensagem obj) {
+		obj.setConversa(conversaService.findById(obj.getConversa().getId()));
+		obj.setUsuario(usuarioService.findById(obj.getUsuario().getId()));
+		obj.setData(new Date());
 		return mensagemRepository.save(obj);
 	}
 	
