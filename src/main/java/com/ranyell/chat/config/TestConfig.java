@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ranyell.chat.domain.Conversa;
 import com.ranyell.chat.domain.Mensagem;
 import com.ranyell.chat.domain.Usuario;
+import com.ranyell.chat.domain.enuns.Perfil;
 import com.ranyell.chat.repositories.ConversaRepository;
 import com.ranyell.chat.repositories.MensagemRepository;
 import com.ranyell.chat.repositories.UsuarioRepository;
@@ -18,6 +20,9 @@ import com.ranyell.chat.repositories.UsuarioRepository;
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -33,15 +38,16 @@ public class TestConfig implements CommandLineRunner {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Usuario s1 = new Usuario(null, "ranyellheneique@gmail.com", "Ranyell Henrique dos Santos", "12345");
-		Usuario s2 = new Usuario(null, "Edmilson@gmail.com", "Edmilson pé de fava", "12345");
-		Usuario s3 = new Usuario(null, "Will@gmail.com", "Will Smith", "12345");
-		Usuario s4 = new Usuario(null, "rafael@gmail.com", "rafael", "12345");
-		Usuario s5 = new Usuario(null, "eduardo@gmail.com", "Eduardo", "12345");
-		Usuario s6 = new Usuario(null, "willian@gmail.com", "Willian", "12345");
-		Usuario s7 = new Usuario(null, "daniel@gmail.com", "Ranyell Henrique dos Santos", "12345");
-		Usuario s8 = new Usuario(null, "fabio@gmail.com", "Dabio pé de fava", "12345");
-		Usuario s9 = new Usuario(null, "ana@gmail.com", "Ana Julia", "12345");
+		Usuario s1 = new Usuario(null, "ranyellheneique@gmail.com", "Ranyell Henrique dos Santos", pe.encode("12345"));
+		s1.addPerfil(Perfil.ADMIN);
+		Usuario s2 = new Usuario(null, "Edmilson@gmail.com", "Edmilson pé de fava", pe.encode("12345"));
+		Usuario s3 = new Usuario(null, "Will@gmail.com", "Will Smith", pe.encode("12345"));
+		Usuario s4 = new Usuario(null, "rafael@gmail.com", "rafael", pe.encode("12345"));
+		Usuario s5 = new Usuario(null, "eduardo@gmail.com", "Eduardo", pe.encode("12345"));
+		Usuario s6 = new Usuario(null, "willian@gmail.com", "Willian", pe.encode("12345"));
+		Usuario s7 = new Usuario(null, "daniel@gmail.com", "Ranyell Henrique dos Santos", pe.encode("12345"));
+		Usuario s8 = new Usuario(null, "fabio@gmail.com", "Dabio pé de fava", pe.encode("12345"));
+		Usuario s9 = new Usuario(null, "ana@gmail.com", "Ana Julia", pe.encode("12345"));
 		
 		Conversa c1 = new Conversa(null);
 		Conversa c2 = new Conversa(null);

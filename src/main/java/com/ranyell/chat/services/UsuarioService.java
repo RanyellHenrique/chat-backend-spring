@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Usuario;
@@ -19,6 +20,9 @@ import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 public class UsuarioService {
 	
 	@Autowired
+	private BCryptPasswordEncoder pe;
+	
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	public Usuario findById(Integer id) {
@@ -28,6 +32,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario insert(Usuario obj) {
+		obj.setSenha(pe.encode(obj.getSenha()));
 		return usuarioRepository.save(obj); 
 	}
 	

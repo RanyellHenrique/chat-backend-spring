@@ -2,9 +2,15 @@ package com.ranyell.chat.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +21,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ranyell.chat.domain.enuns.Perfil;
 
 @Entity
 public class Usuario implements Serializable {
@@ -32,14 +39,20 @@ public class Usuario implements Serializable {
 	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
 	
+	@JsonIgnore
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Conversa> conversas = new ArrayList<>();
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
 	public Usuario() {
-		
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Usuario(Integer id, String email, String nome, String senha) {
@@ -48,6 +61,7 @@ public class Usuario implements Serializable {
 		this.email = email;
 		this.nome = nome;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Integer getId() {
@@ -80,6 +94,14 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 	
 	public List<Conversa> getConversas(){
