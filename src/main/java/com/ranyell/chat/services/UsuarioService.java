@@ -12,7 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Usuario;
+import com.ranyell.chat.domain.enuns.Perfil;
 import com.ranyell.chat.repositories.UsuarioRepository;
+import com.ranyell.chat.security.UserSS;
+import com.ranyell.chat.services.exceptions.AuthorizationException;
 import com.ranyell.chat.services.exceptions.DataIntegrityException;
 import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 
@@ -26,6 +29,10 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	public Usuario findById(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Usuario> obj = usuarioRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Usuario não encontrada Id: " + id + ",tipo: " + Usuario.class.getName()));

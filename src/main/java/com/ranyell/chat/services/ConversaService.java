@@ -10,7 +10,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ranyell.chat.domain.Conversa;
+import com.ranyell.chat.domain.Usuario;
 import com.ranyell.chat.repositories.ConversaRepository;
+import com.ranyell.chat.security.UserSS;
+import com.ranyell.chat.services.exceptions.AuthorizationException;
 import com.ranyell.chat.services.exceptions.DataIntegrityException;
 import com.ranyell.chat.services.exceptions.ObjectNotFoundException;
 
@@ -19,6 +22,9 @@ public class ConversaService {
 	
 	@Autowired
 	private ConversaRepository conversaRepository;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	public Conversa findById(Integer id) {
 		Optional<Conversa> obj = conversaRepository.findById(id);
@@ -45,8 +51,13 @@ public class ConversaService {
 		return conversaRepository.save(obj);
 	}
 	
-	public Page<Conversa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pagRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return conversaRepository.findAll(pagRequest);
+	public Page<Conversa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario usuario =  usuarioService.findById(user.getId());
+		return conversaRepository.findByUsuarios(usuario, pageRequest);
 	}
 }

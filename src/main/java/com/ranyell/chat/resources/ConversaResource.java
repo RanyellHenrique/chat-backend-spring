@@ -53,14 +53,13 @@ public class ConversaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value="/page")
+	@GetMapping(value = "/page")
 	public ResponseEntity<Page<Conversa>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="id") String orderBy, 
-			@RequestParam(value="direction", defaultValue="ASC") String direction){
+			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<Conversa> list = conversaService.findPage(page, linesPerPage, orderBy, direction);
-		//Page<UsuarioDTO> listDto = list.map(obj -> new UsuarioDTO(obj));
 		return ResponseEntity.ok().body(list);
 	}
 
