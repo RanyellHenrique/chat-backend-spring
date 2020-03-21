@@ -38,6 +38,12 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value="/email")
+	public ResponseEntity<Usuario> find(@RequestParam(value="value") String email) {
+		Usuario obj = usuarioService.findByEmail(email);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody Usuario obj){
 		obj = usuarioService.insert(obj);
@@ -60,6 +66,7 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll(){
 		List<Usuario> list = usuarioService.findAll();

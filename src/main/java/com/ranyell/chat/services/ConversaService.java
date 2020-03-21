@@ -27,6 +27,10 @@ public class ConversaService {
 	private UsuarioService usuarioService;
 
 	public Conversa findById(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user == null || user.getId() != id ) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Conversa> obj = conversaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Conversa não encontrada Id: " + id + ",tipo: " + Conversa.class.getName()));
