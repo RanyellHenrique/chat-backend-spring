@@ -66,7 +66,6 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll(){
 		List<Usuario> list = usuarioService.findAll();

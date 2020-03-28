@@ -1,6 +1,8 @@
 package com.ranyell.chat.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ranyell.chat.domain.Conversa;
+import com.ranyell.chat.dto.ConversaDTO;
 import com.ranyell.chat.services.ConversaService;
 
 @RestController
@@ -61,6 +64,13 @@ public class ConversaResource {
 			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<Conversa> list = conversaService.findPage(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<ConversaDTO>> findAll(){
+		List<Conversa> list = conversaService.findAll();
+		List<ConversaDTO> listDto = list.stream().map(obj -> new ConversaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 
 }

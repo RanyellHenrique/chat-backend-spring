@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Mensagem implements Serializable {
@@ -22,6 +24,8 @@ public class Mensagem implements Serializable {
 	
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String conteudo;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date data;
 
 	@ManyToOne

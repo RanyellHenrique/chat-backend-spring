@@ -6,4 +6,5 @@ import com.ranyell.chat.domain.Mensagem;
 
 public interface MensagemRepository  extends JpaRepository<Mensagem, Integer>{
 
+	
 }

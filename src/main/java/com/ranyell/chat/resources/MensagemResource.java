@@ -1,6 +1,8 @@
 package com.ranyell.chat.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ranyell.chat.domain.Mensagem;
+import com.ranyell.chat.dto.MensagemDTO;
 import com.ranyell.chat.services.MensagemService;
 
 @RestController
@@ -56,14 +59,21 @@ public class MensagemResource {
 	}
 	
 	@GetMapping(value="/page")
-	public ResponseEntity<Page<Mensagem>> findPage(
+	public ResponseEntity<Page<MensagemDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="id") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction){
 		Page<Mensagem> list = mensagemService.findPage(page, linesPerPage, orderBy, direction);
-		//Page<UsuarioDTO> listDto = list.map(obj -> new UsuarioDTO(obj));
-		return ResponseEntity.ok().body(list);
+		Page<MensagemDTO> listDto = list.map(obj -> new MensagemDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<MensagemDTO>> findAll(){
+		List<Mensagem> list = mensagemService.findAll();
+		List<MensagemDTO> listDto = list.stream().map(obj -> new MensagemDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 
 }

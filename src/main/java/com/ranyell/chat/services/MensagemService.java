@@ -1,6 +1,8 @@
 package com.ranyell.chat.services;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -61,5 +63,10 @@ public class MensagemService {
 	public Page<Mensagem> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pagRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return mensagemRepository.findAll(pagRequest);
+	}
+	
+	public List<Mensagem> findAll(){
+		List<Mensagem> obj = mensagemRepository.findAll();
+		return obj;
 	}
 }
