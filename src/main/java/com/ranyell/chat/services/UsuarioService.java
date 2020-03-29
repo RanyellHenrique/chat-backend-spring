@@ -39,8 +39,12 @@ public class UsuarioService {
 	}
 	
 	public Usuario insert(Usuario obj) {
-		obj.setSenha(pe.encode(obj.getSenha()));
+		try {
+			obj.setSenha(pe.encode(obj.getSenha()));
 		return usuarioRepository.save(obj); 
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Usuario não pode ser cadastrado, Email repetido.");
+		}
 	}
 	
 	public void delete(Integer id) {
